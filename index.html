@@ -227,7 +227,6 @@ a { text-decoration: none; color: inherit; }
   display: flex;
   align-items: center;
   transition: all 0.4s ease;
-  /* Always visible: dark semi-transparent background */
   background: rgba(20, 16, 12, 0.82);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(255,255,255,0.08);
@@ -235,7 +234,7 @@ a { text-decoration: none; color: inherit; }
 #nav.scrolled {
   background: rgba(255,255,255,0.97);
   backdrop-filter: blur(16px);
-  box-shadow: 0 1px 0 rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   border-bottom: 1px solid rgba(0,0,0,0.06);
 }
 #nav.scrolled .nav-logo-text { color: var(--dark) !important; }
@@ -539,6 +538,10 @@ a { text-decoration: none; color: inherit; }
 
 /* Saekdong decorative bottom strip */
 .hero-bottom-strip {
+  display: block;
+  margin: 0;
+  padding: 0;
+  line-height: 0;
   position: absolute;
   bottom: 0;
   left: 0;
@@ -1522,6 +1525,22 @@ a { text-decoration: none; color: inherit; }
   object-position: center top;
   display: block;
 }
+@media (max-width: 600px) {
+  .modal-profile-grid {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+  .modal-profile-img {
+    width: 100%;
+    height: auto;
+    max-height: 320px;
+    object-fit: contain;
+    object-position: center;
+    background: #f5f0eb;
+  }
+  .modal-box { max-height: 92vh; overflow-y: auto; }
+  .modal-body { padding: 1.5rem 1.2rem 2rem; }
+}
 .modal-profile-info { }
 .modal-profile-specialty {
   font-family: 'Noto Serif JP', serif;
@@ -1578,7 +1597,13 @@ a { text-decoration: none; color: inherit; }
 .modal-apply-btn:hover { background: #c02020; }
 @media (max-width: 600px) {
   .modal-profile-grid { grid-template-columns: 1fr; }
-  .modal-profile-img { width: 100%; height: 220px; }
+  .modal-profile-img {
+    width: 100%;
+    height: auto !important;
+    max-height: none !important;
+    object-fit: contain !important;
+    object-position: center top !important;
+  }
 }
 .saekdong-form-top {
   height: 5px;
@@ -1744,7 +1769,7 @@ footer {
   .culture-grid { grid-template-columns: repeat(2, 1fr); }
   .nav-links { display: none; }
   .hamburger { display: flex; }
-  #hero { margin-top: 108px; }
+  #hero { margin-top: 60px; }
   .scroll-indicator { display: none; }
   #cta-banner::before, #cta-banner::after { display: none; }
 }
@@ -2005,6 +2030,34 @@ footer {
   max-width: 900px;
   background: #000;
   animation: fadeUp 0.3s ease;
+  max-height: 90vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+@media (max-width: 600px) {
+  #video-popup {
+    padding: 0.5rem;
+    align-items: center;
+    overflow-y: auto;
+  }
+  .video-popup-box {
+    max-height: none;
+    width: calc(100% - 1rem);
+  }
+  .video-popup-close {
+    position: absolute;
+    top: 0.4rem;
+    right: 0.4rem;
+    font-size: 1.6rem;
+    background: rgba(0,0,0,0.5);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
 }
 .video-popup-close {
   position: absolute;
@@ -2030,9 +2083,8 @@ footer {
 }
 .video-popup-player {
   position: relative;
-  padding-top: 56.25%;
-  background: #111;
-  overflow: hidden;
+  background: #000;
+  min-height: 200px;
 }
 .video-popup-player iframe {
   position: absolute;
@@ -2096,9 +2148,9 @@ footer {
         </div>
       </li>
     </ul>
-    <!-- Mobile: lang badge + hamburger -->
-    <div class="mob-only" style="display:flex;align-items:center;gap:0.75rem;">
-      <button class="lang-selector" id="lang-selector-mob" onclick="toggleLangDropdown(event)" style="position:relative;">
+    <!-- Mobile: hamburger only (lang is in slide menu) -->
+    <div class="mob-only" style="display:flex;align-items:center;gap:0.5rem;">
+      <button class="lang-selector lang-selector-mob-hidden" id="lang-selector-mob" onclick="toggleLangDropdown(event)" style="position:relative;display:none !important;">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         <span id="lang-current-label-mob">日本語</span>
         <div class="lang-dropdown">
@@ -2201,7 +2253,7 @@ footer {
 <!-- ==========================================
      ABOUT SECTION
      ========================================== -->
-<section id="about" class="section-pad">
+<section id="about" class="section-pad" style="margin-top:0;padding-top:5rem;">
   <div class="about-saekdong-side"></div>
   <div class="container">
     <div class="about-grid">
@@ -2883,6 +2935,51 @@ const style = document.createElement('style');
 style.textContent = `
   @media (max-width: 768px) { .dsk-only { display: none !important; } }
   @media (min-width: 769px) { .mob-only { display: none !important; } }
+  /* Mobile nav layout fix */
+  @media (max-width: 768px) {
+    #nav {
+      height: 60px !important;
+      min-height: 60px !important;
+      background: rgba(20,16,12,0.95) !important;
+      backdrop-filter: blur(12px) !important;
+    }
+    #nav.scrolled {
+      background: rgba(255,255,255,0.97) !important;
+    }
+    .nav-inner {
+      padding: 0 1rem !important;
+      height: 60px !important;
+    }
+    .nav-logo {
+      flex: 1 !important;
+      gap: 0.4rem !important;
+      min-width: 0 !important;
+    }
+    .nav-logo-img-wrap {
+      width: 36px !important;
+      height: 33px !important;
+      flex-shrink: 0 !important;
+    }
+    .nav-logo-textblock {
+      min-width: 0 !important;
+      overflow: hidden !important;
+    }
+    .nav-logo-corp {
+      font-size: 0.5rem !important;
+      letter-spacing: 0.06em !important;
+      white-space: nowrap !important;
+    }
+    .nav-logo-text {
+      font-size: 0.88rem !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+    .mob-only {
+      flex-shrink: 0 !important;
+    }
+    #hero { margin-top: 60px !important; }
+  }
 `;
 document.head.appendChild(style);
 </script>
@@ -3062,11 +3159,11 @@ function openVideoPopup(idx) {
   // Show thumbnail + YouTube button (no embed = no error 153)
   const player = document.getElementById('video-popup-player');
   player.innerHTML = `
-    <div style="position:absolute;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;">
+    <div style="position:relative;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;padding:1rem 1rem 1.5rem;">
       <div style="position:relative;width:100%;max-width:560px;">
         <img src="https://i.ytimg.com/vi/${v.id}/maxresdefault.jpg"
              onerror="this.src='https://i.ytimg.com/vi/${v.id}/hqdefault.jpg'"
-             style="width:100%;display:block;opacity:0.7;">
+             style="width:100%;display:block;opacity:0.7;max-height:56vw;object-fit:cover;">
         <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
           <svg viewBox="0 0 68 48" width="80" height="56" style="filter:drop-shadow(0 2px 8px rgba(0,0,0,0.6))">
             <path d="M66.52,7.74c-0.78-2.93-2.49-5.41-5.42-6.19C55.79,.13,34,0,34,0S12.21,.13,6.9,1.55C3.97,2.33,2.27,4.81,1.48,7.74C0.06,13.05,0,24,0,24s0.06,10.95,1.48,16.26c0.78,2.93,2.49,5.41,5.42,6.19C12.21,47.87,34,48,34,48s21.79-0.13,27.1-1.55c2.93-0.78,4.64-3.26,5.42-6.19C67.94,34.95,68,24,68,24S67.94,13.05,66.52,7.74z" fill="#ff0000"/>
