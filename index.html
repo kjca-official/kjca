@@ -1769,7 +1769,7 @@ footer {
   .culture-grid { grid-template-columns: repeat(2, 1fr); }
   .nav-links { display: none; }
   .hamburger { display: flex; }
-  #hero { margin-top: 60px; }
+  #hero { margin-top: 56px; }
   .scroll-indicator { display: none; }
   #cta-banner::before, #cta-banner::after { display: none; }
 }
@@ -2148,17 +2148,8 @@ footer {
         </div>
       </li>
     </ul>
-    <!-- Mobile: hamburger only (lang is in slide menu) -->
-    <div class="mob-only" style="display:flex;align-items:center;gap:0.5rem;">
-      <button class="lang-selector lang-selector-mob-hidden" id="lang-selector-mob" onclick="toggleLangDropdown(event)" style="position:relative;display:none !important;">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-        <span id="lang-current-label-mob">日本語</span>
-        <div class="lang-dropdown">
-          <div class="lang-option active" onclick="pickLang('ja',event)"><span class="flag">🇯🇵</span> 日本語</div>
-          <div class="lang-option" onclick="pickLang('ko',event)"><span class="flag">🇰🇷</span> 한국어</div>
-          <div class="lang-option" onclick="pickLang('en',event)"><span class="flag">🇺🇸</span> English</div>
-        </div>
-      </button>
+    <!-- Mobile: hamburger only -->
+    <div class="mob-only">
       <button class="hamburger" onclick="toggleMenu()" aria-label="menu">
         <span></span><span></span><span></span>
       </button>
@@ -2938,8 +2929,8 @@ style.textContent = `
   /* Mobile nav layout fix */
   @media (max-width: 768px) {
     #nav {
-      height: 60px !important;
-      min-height: 60px !important;
+      height: 56px !important;
+      min-height: 56px !important;
       background: rgba(20,16,12,0.95) !important;
       backdrop-filter: blur(12px) !important;
     }
@@ -2947,17 +2938,19 @@ style.textContent = `
       background: rgba(255,255,255,0.97) !important;
     }
     .nav-inner {
-      padding: 0 1rem !important;
-      height: 60px !important;
+      padding: 0 0.75rem !important;
+      height: 56px !important;
+      gap: 0 !important;
     }
     .nav-logo {
-      flex: 1 !important;
-      gap: 0.4rem !important;
+      flex: 1 1 auto !important;
+      gap: 0.35rem !important;
       min-width: 0 !important;
+      overflow: hidden !important;
     }
     .nav-logo-img-wrap {
-      width: 36px !important;
-      height: 33px !important;
+      width: 32px !important;
+      height: 30px !important;
       flex-shrink: 0 !important;
     }
     .nav-logo-textblock {
@@ -2965,20 +2958,32 @@ style.textContent = `
       overflow: hidden !important;
     }
     .nav-logo-corp {
-      font-size: 0.5rem !important;
-      letter-spacing: 0.06em !important;
+      font-size: 0.48rem !important;
+      letter-spacing: 0.05em !important;
       white-space: nowrap !important;
+      line-height: 1.4 !important;
     }
     .nav-logo-text {
-      font-size: 0.88rem !important;
+      font-size: 0.82rem !important;
       white-space: nowrap !important;
       overflow: hidden !important;
       text-overflow: ellipsis !important;
+      line-height: 1.2 !important;
     }
     .mob-only {
-      flex-shrink: 0 !important;
+      flex: 0 0 auto !important;
+      display: flex !important;
+      align-items: center !important;
     }
-    #hero { margin-top: 60px !important; }
+    .hamburger {
+      display: flex !important;
+      padding: 6px !important;
+    }
+    .hamburger span {
+      width: 22px !important;
+      height: 2px !important;
+    }
+    #hero { margin-top: 56px !important; }
   }
 `;
 document.head.appendChild(style);
